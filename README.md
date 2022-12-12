@@ -1,24 +1,42 @@
-# README
+# DEVISE WITH JWT Authentication
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+In this project, an API for user authentication was implemented using the JSON Web Token (JWT) devise.
 
-Things you may want to cover:
+The following technologies were used for this:
 
-* Ruby version
+- ruby 2.6.5
+- rails 6.1.7
+- pg 1.1
 
-* System dependencies
+How to set up:
 
-* Configuration
+1. Clone this project
+2. In the project folder run the command `bundle install`
+3. Run the commands to create the databases
+   a. `rails db:create`
+   b. `rails db:migrate`
 
-* Database creation
+After configuration, it is possible to run the project (`rails s`) and make tests to access the endpoints.
 
-* Database initialization
+Some sample tests that might be helpful
 
-* How to run the test suite
+1. Try to access an authenticated controller without a JWT token
+   `$ curl -XGET -H "Content-Type: application/json" http://localhost:3000/member-data`
+   (Esperado que request falhe pela falta de autenticação)
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Register an account
+   `$ curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users`
 
-* Deployment instructions
+3. Login with registered account
+   `$ curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users/sign_in`
 
-* ...
+4. It is possible to add the `-i` flag in the request above to get the JWT token and evaluate that it is possible to login with just the token
+
+   a. Getting the token in the header
+   `$ curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users/sign_in`
+
+   b. Logging in with the obtained token
+   `$ curl -XGET -H "Authorization: Bearer <TOKEN JWT HERE>" -H "Content-Type: application/json" http://localhost:3000/member-data`
+
+5. Finally, we can logout, which includes the JWT Token in the deny list and does not allow it to be used again for login (ps: a new token is generated with each new login)
+   `$ curl -XDELETE -H "Authorization: Bearer <TOKEN JWT HERE>" -H "Content-Type: application/json" http://localhost:3000/users/sign_out`
