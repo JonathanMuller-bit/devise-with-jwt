@@ -23,7 +23,6 @@ Some sample tests that might be helpful
 
 1. Try to access an authenticated controller without a JWT token
    * `$ curl -XGET -H "Content-Type: application/json" http://localhost:3000/member-data`
-   (Esperado que request falhe pela falta de autenticação)
 
 2. Register an account
    * `$ curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users`
