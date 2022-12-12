@@ -12,7 +12,8 @@ How to set up:
 
 1. Clone this project
 2. In the project folder run the command `bundle install`
-3. Run the commands to create the databases
+3. Generate a token with `rake secret` and copy the value displayed on .env file. The project has a .env.example as a template
+4. Run the commands to create the databases
    a. `rails db:create`
    b. `rails db:migrate`
 
@@ -33,7 +34,7 @@ Some sample tests that might be helpful
 4. It is possible to add the `-i` flag in the request above to get the JWT token and evaluate that it is possible to login with just the token
 
    a. Getting the token in the header
-   * `$ curl -XPOST -H "Content-Type: application/json" -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users/sign_in`
+   * `$ curl -XPOST -H "Content-Type: application/json" -i -d '{ "user": { "email": "test@email.com", "password": "12345678" } }' http://localhost:3000/users/sign_in`
 
    b. Logging in with the obtained token
    * `$ curl -XGET -H "Authorization: Bearer <TOKEN JWT HERE>" -H "Content-Type: application/json" http://localhost:3000/member-data`
